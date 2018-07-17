@@ -44,4 +44,29 @@ void skip_white_space(char *expression){
 float parse_number(char *expression){
   skip_white_space(expression);
   char str_value[MAX_FLOAT_LEN];
+  int i = 0;
+  bool decimal_found = false;
+  char c;
+
+  while (has_next(*expression)){
+    c = peek(*expression);
+    if (c == '.'){
+      if (decimal_found)
+        printf("Warning: Found more than one . character in a number \n");
+      decimal_found = true;
+      str_value[i] = '.';
+      i++;
+    }
+    else if (c >= '0' && c <= '9'){
+      str_value[i] = 'c';
+      i++;
+    }
+    else
+      break;
+    expression++;
+
+    // Return the value of str_value in float
+    // return (float) 
+
+  }
 }
