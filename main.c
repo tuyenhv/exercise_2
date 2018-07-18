@@ -66,7 +66,49 @@ float parse_number(char *expression){
     expression++;
 
     // Return the value of str_value in float
-    // return (float) 
+    return atof(str_value);
+  }
+}
 
+float parse_value(char *expression){
+  skip_white_space(expression);
+  char c = peek(expression);
+  if ((c >= '0') && (c <= '9'))
+    return parse_number(expression);
+}
+
+float parse_negative(char *expression){
+  skip_white_space(expression);
+  char c = peek(expression);
+  if (c == '-'){
+    expression++;
+    return (-1 * parse_parenthesis(expression));
+  }
+  else
+    return parse_value;
+}
+
+float parse_parenthesis(char *expression){
+  skip_white_space(expression);
+  float value;
+  char c = peek(expression);
+  if (c == '('){
+    expression++;
+    value = parse_expression(expression);
+    skip_white_space(expression);
+    if (peek(expression) != ')')
+      printf("Warning: No closing parenthesis found \n");
+    expression++;
+    return value;
+  }
+  else
+    return parse_negative(expression);
+}
+
+float parse_multiplication(char *expression){
+  // Fix this: this is different from the python code
+  float values = parse_parenthesis(expression);
+  while (1) {
+    skip_white_space();
   }
 }
