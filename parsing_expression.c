@@ -2,13 +2,19 @@
 #include<stdbool.h>
 #include<stdlib.h>
 
-char *str = "3+2*(2.5+3.5)";
+char *str = "5+2*(2.5+3.5)";
+
+int main(void)
+{
+  int index;
+  float result = expression(str, &index);
+  printf("result: %f \n", result);
+  return 0;
+}
 
 char get(char *str, int *index){
   return *(str + (*index));
 }
-
-float expression(char *str, int *index);
 
 float number(char *str, int *index){
   char str_value[50];
@@ -68,12 +74,4 @@ float expression(char *str, int *index){
     }
   }
   return result;
-}
-
-int main(void)
-{
-  int index;
-  float result = expression(str, &index);
-  printf("result: %f \n", result);
-  return 0;
 }
