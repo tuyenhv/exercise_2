@@ -3,11 +3,12 @@
 #include<stdlib.h>
 #include"parsing_expression.h"
 
-char *str = "5+2*(2.5+3.5)";
-
 int main(void)
 {
+  char str[MAX_LEN];
   int index;
+  printf("Input the expression: \n");
+  scanf("%[^\n]%*c", str);
   float result = expression(str, &index);
   printf("result: %f \n", result);
   return 0;
