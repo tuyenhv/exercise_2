@@ -9,9 +9,19 @@ int main(void)
   int index;
   printf("Input the expression: \n");
   scanf("%[^\n]%*c", str);
+  remove_spaces(str);
   float result = expression(str, &index);
   printf("result: %f \n", result);
   return 0;
+}
+
+void remove_spaces(char *str){
+  int i, count = 0;
+  for (i = 0; str[i]; i++)
+    if (str[i] != ' ')
+        str[count++] = str[i];
+
+  str[count] = '\0';
 }
 
 char get(char *str, int *index){

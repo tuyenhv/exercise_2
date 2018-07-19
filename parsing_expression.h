@@ -4,6 +4,7 @@
 #define MAX_LEN 100
 #define MAX_FLOAT_LEN 40
 
+void remove_spaces(char *str);
 char get(char *str, int *index);
 float number(char *str, int *index);
 float factor(char *str, int *index);
