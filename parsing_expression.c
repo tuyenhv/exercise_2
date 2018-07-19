@@ -17,8 +17,6 @@ float expression();
 float number(){
   char str_value[50];
   int i = 0;
-  bool decimal_found = false;
-  char c;
   while ((peek() >= '0' && peek() <= '9') || peek() == '.'){
     str_value[i] = get();
     i++;
