@@ -2,69 +2,69 @@
 #include<stdbool.h>
 #include<stdlib.h>
 
-char * str = "3+2.5+3.5";
+char *str = "3+2*(2.5+3.5)";
 
-char peek(char *str){
-  return *str;
+char get(char *str, int *index){
+  return *(str + (*index));
 }
 
-float expression(char *str);
+float expression(char *str, int *index);
 
-float number(char *str){
+float number(char *str, int *index){
   char str_value[50];
   int i = 0;
-  while ((peek(str) >= '0' && peek(str) <= '9') || peek(str) == '.'){
-    str_value[i] = peek(str);
-    str++;
+  while ((get(str, index) >= '0' && get(str, index) <= '9') || get(str, index) == '.'){
+    str_value[i] = get(str, index);
+    (*index)++;
     i++;
   }
   return atof(str_value);
 }
 
-float factor(char *str){
-  if (peek(str) >= '0' && peek(str) <= '9')
-    return number(str);
-  else if (peek(str) == '('){
-    peek(str); // '('
-    str++;
-    float result = expression(str);
-    peek(str); // ')'
-    str++;
+float factor(char *str, int *index){
+  if (get(str, index) >= '0' && get(str, index) <= '9')
+    return number(str, index);
+  else if (get(str, index) == '('){
+    get(str, index); // '('
+    (*index)++;
+    float result = expression(str, index);
+    get(str, index); // ')'
+    (*index)++;
     return result;
   }
-  else if (peek(str) == '-'){
-    peek(str);
-    str++;
-    return -factor(str);
+  else if (get(str, index) == '-'){
+    get(str, index);
+    (*index)++;
+    return -factor(str, index);
   }
   return 0; // error
 }
 
-float term(char *str){
-  float result = factor(str);
-  while (peek(str) == '*' || peek(str) == '/'){
-    if (peek(str) == '*'){
-      str++;
-      result *= factor(str);
+float term(char *str, int *index){
+  float result = factor(str, index);
+  while (get(str, index) == '*' || get(str, index) == '/'){
+    if (get(str, index) == '*'){
+      (*index)++;
+      result *= factor(str, index);
     }
     else{
-      str++;
-      result /= factor(str);
+      (*index)++;
+      result /= factor(str, index);
     }
   }
   return result;
 }
 
-float expression(char *str){
-  float result = term(str);
-  while (peek(str) == '+' || peek(str) == '-'){
-    if (peek(str) == '+'){
-      str++;
-      result += term(str);
+float expression(char *str, int *index){
+  float result = term(str, index);
+  while (get(str, index) == '+' || get(str, index) == '-'){
+    if (get(str, index) == '+'){
+      (*index)++;
+      result += term(str, index);
     }
     else{
-      str++;
-      result -= term(str);
+      (*index)++;
+      result -= term(str, index);
     }
   }
   return result;
@@ -72,7 +72,8 @@ float expression(char *str){
 
 int main(void)
 {
-  float result = expression(str);
+  int index;
+  float result = expression(str, &index);
   printf("result: %f \n", result);
   return 0;
 }
