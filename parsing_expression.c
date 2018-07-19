@@ -2,67 +2,77 @@
 #include<stdbool.h>
 #include<stdlib.h>
 
-const char * expressionToParse = "3*(2.5+3.5)";
+char * str = "3+2.5+3.5";
 
-char peek(){
-  return *expressionToParse;
+char peek(char *str){
+  return *str;
 }
 
-char get(){
-  return *expressionToParse++;
-}
+float expression(char *str);
 
-float expression();
-
-float number(){
+float number(char *str){
   char str_value[50];
   int i = 0;
-  while ((peek() >= '0' && peek() <= '9') || peek() == '.'){
-    str_value[i] = get();
+  while ((peek(str) >= '0' && peek(str) <= '9') || peek(str) == '.'){
+    str_value[i] = peek(str);
+    str++;
     i++;
   }
   return atof(str_value);
 }
 
-float factor(){
-  if (peek() >= '0' && peek() <= '9')
-    return number();
-  else if (peek() == '('){
-    get(); // '('
-    float result = expression();
-    get(); // ')'
+float factor(char *str){
+  if (peek(str) >= '0' && peek(str) <= '9')
+    return number(str);
+  else if (peek(str) == '('){
+    peek(str); // '('
+    str++;
+    float result = expression(str);
+    peek(str); // ')'
+    str++;
     return result;
   }
-  else if (peek() == '-'){
-    get();
-    return -factor();
+  else if (peek(str) == '-'){
+    peek(str);
+    str++;
+    return -factor(str);
   }
   return 0; // error
 }
 
-float term(){
-  float result = factor();
-  while (peek() == '*' || peek() == '/')
-    if (get() == '*')
-      result *= factor();
-    else
-      result /= factor();
+float term(char *str){
+  float result = factor(str);
+  while (peek(str) == '*' || peek(str) == '/'){
+    if (peek(str) == '*'){
+      str++;
+      result *= factor(str);
+    }
+    else{
+      str++;
+      result /= factor(str);
+    }
+  }
   return result;
 }
 
-float expression(){
-  float result = term();
-  while (peek() == '+' || peek() == '-')
-    if (get() == '+')
-      result += term();
-    else
-      result -= term();
+float expression(char *str){
+  float result = term(str);
+  while (peek(str) == '+' || peek(str) == '-'){
+    if (peek(str) == '+'){
+      str++;
+      result += term(str);
+    }
+    else{
+      str++;
+      result -= term(str);
+    }
+  }
   return result;
 }
 
 int main(void)
 {
-  float result = expression();
+  float result = expression(str);
   printf("result: %f \n", result);
   return 0;
 }
