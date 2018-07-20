@@ -29,13 +29,14 @@ char get(char *str, int *index){
 }
 
 float number(char *str, int *index){
-  char str_value[50];
+  char str_value[MAX_FLOAT_LEN];
   int i = 0;
   while ((get(str, index) >= '0' && get(str, index) <= '9') || get(str, index) == '.'){
     str_value[i] = get(str, index);
     (*index)++;
     i++;
   }
+  str_value[i] = '\0';
   return atof(str_value);
 }
 
