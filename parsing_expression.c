@@ -48,15 +48,15 @@ float factor(char *str, int *index){
   if (get(str, index) >= '0' && get(str, index) <= '9')
     return number(str, index);
   else if (get(str, index) == '('){
-    get(str, index); // '('
+    // Increase index when get '()'
     (*index)++;
     float result = expression(str, index);
-    get(str, index); // ')'
+    // Increase index when get ')'
     (*index)++;
     return result;
   }
   else if (get(str, index) == '-'){
-    get(str, index);
+    // Increase index when get '-'
     (*index)++;
     return -factor(str, index);
   }
