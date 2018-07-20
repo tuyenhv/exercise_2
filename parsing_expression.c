@@ -15,6 +15,7 @@ int main(void)
   return 0;
 }
 
+/* Remove spaces in the input string before parsing it*/
 void remove_spaces(char *str){
   int i, count = 0;
   for (i = 0; str[i]; i++)
@@ -24,10 +25,12 @@ void remove_spaces(char *str){
   str[count] = '\0';
 }
 
+/* Get the character with index in the string*/
 char get(char *str, int *index){
   return *(str + (*index));
 }
 
+/* Get the float number from the input string*/
 float number(char *str, int *index){
   char str_value[MAX_FLOAT_LEN];
   int i = 0;
@@ -40,6 +43,7 @@ float number(char *str, int *index){
   return atof(str_value);
 }
 
+/* Parse the string and handle if the character is number or parenthesis*/
 float factor(char *str, int *index){
   if (get(str, index) >= '0' && get(str, index) <= '9')
     return number(str, index);
@@ -59,6 +63,7 @@ float factor(char *str, int *index){
   return 0; // error
 }
 
+/* Parse the string and handle if the character is multiplication*/
 float term(char *str, int *index){
   float result = factor(str, index);
   while (get(str, index) == '*' || get(str, index) == '/'){
@@ -74,6 +79,7 @@ float term(char *str, int *index){
   return result;
 }
 
+/* Parse the string and handle if the character is addition*/
 float expression(char *str, int *index){
   float result = term(str, index);
   while (get(str, index) == '+' || get(str, index) == '-'){
