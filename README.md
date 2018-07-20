@@ -8,3 +8,15 @@ Ex:
 1 * 2 + 2 = 4
 
 2 * (2+3) = 10
+
+
+# How to use
+============
+
+# Compile:
+
+$ gcc parsing_expression.c -o main
+
+# Run:
+
+$ ./main
